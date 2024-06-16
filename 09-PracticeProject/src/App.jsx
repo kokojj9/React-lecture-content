@@ -53,9 +53,23 @@ function App() {
     })
   };
   
+
+  const handleDeleteProject = () => {
+    setProjectState(prevState => {
+      return {
+        ...prevState,
+        selectedProjectId: undefined,
+        projects: prevState.projects.filter(
+          project => project.id !== prevState.selectedProjectId
+        ) // find 와 map 과 비슷하게 함수를 입력받아서 projects배열의 모듬 함수에 실행됩니다. true면 지워줌
+      };
+    });
+  }
+
+
   const selectProject = projectState.projects.find(project => project.id === projectState.selectedProjectId);
 
-  let content = <SelectedProject project={selectProject} />;
+  let content = <SelectedProject project={selectProject} onDelete={handleDeleteProject} />;
 
   if(projectState.selectedProjectId === null) {
     content = <NewProjects onAdd={handleAddProject} onCancel={handleCancelAddProject} />;
