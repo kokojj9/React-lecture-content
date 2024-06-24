@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import Places from './components/Places.jsx';
 import { AVAILABLE_PLACES } from './data.js';
@@ -7,23 +7,40 @@ import DeleteConfirmation from './components/DeleteConfirmation.jsx';
 import logoImg from './assets/logo.png';
 import { sortPlacesByDistance } from './loc.js';
 
+const storedIds = JSON.parse(localStorage.getItem('selectedPlaces')) || [];
+  const storedPlaces = storedIds.map(id => 
+    AVAILABLE_PLACES.find(place => place.id === id)
+  );
+  // useEffect 를 사용할 필요가 없는 로직 로컬저장소에서 바로 정보를 가져오기 때문에 한번 실행된 후에 app컴포넌트를 재랜더링시키지않음
+  // 앱이 실핼될때 한 번만 실행되도 상관없으므로 app컴포넌트 외부로 옮겨주어도 상관없음 app컴포넌트가 랜더링 될때마다 계속 실행 될 것이기 때문
+
 function App() {
+
   const modal = useRef();
   const selectedPlace = useRef();
   const [availablePlaces, setAvailablePlaces] = useState([]);
-  const [pickedPlaces, setPickedPlaces] = useState([]);
+  const [pickedPlaces, setPickedPlaces] = useState(storedPlaces);
 
-  navigator.geolocation.getCurrentPosition(position => {
-    const sortedPlaces = sortPlacesByDistance(
-      AVAILABLE_PLACES, 
-      position.coords.latitude, 
-      position.coords.longitude
-    );
 
-    setAvailablePlaces(sortedPlaces);
+  useEffect(() => {
+    // useEffect내의 함수는 컴포넌트안의 내용이 실행된 뒤에 실행됨
+    // 한번 실행된 후 app컴포넌트가 다시 랜더링되어도, 두번재 인자인 빈배열이 바뀐 내용이 없기 때문에 다시 실행되지 않음
+    // 두번째 인자를 넣지않으면 계속 실행됨
+    navigator.geolocation.getCurrentPosition(position => {
+      const sortedPlaces = sortPlacesByDistance(
+        AVAILABLE_PLACES,
+        position.coords.latitude,
+        position.coords.longitude
+      );
 
-    // 이렇게 할 경우 APP컴포넌트가 재랜더링되고 다시 이 함수를 실행하기 때문에 무한루프가 발생하게 됨
-  });
+      setAvailablePlaces(sortedPlaces);
+
+      // 이렇게 할 경우 APP컴포넌트가 재랜더링되고 다시 이 함수를 실행하기 때문에 무한루프가 발생하게 됨
+      // useEffect로 해결할 것임
+    });
+  }, []);
+
+
 
   function handleStartRemovePlace(id) {
     modal.current.open();
@@ -42,6 +59,13 @@ function App() {
       const place = AVAILABLE_PLACES.find((place) => place.id === id);
       return [place, ...prevPickedPlaces];
     });
+
+    const storedIds = JSON.parse(localStorage.getItem('selectedPlaces')) || [];
+
+    if (storedIds.indexOf(id) === -1) {
+      localStorage.setItem('selectedPlaces', JSON.stringify([id, ...storedIds]));
+    }
+
   }
 
   function handleRemovePlace() {
@@ -49,6 +73,11 @@ function App() {
       prevPickedPlaces.filter((place) => place.id !== selectedPlace.current)
     );
     modal.current.close();
+
+    const storedIds = JSON.parse(localStorage.getItem('selectedPlaces')) || [];
+
+    localStorage.setItem('selectedPlaces', JSON.stringify(storedIds.filter(id => id !== selectedPlace.current)));
+
   }
 
   return (
@@ -78,6 +107,7 @@ function App() {
         <Places
           title="Available Places"
           places={availablePlaces}
+          fallbackText="Sorting places by distance..."
           onSelectPlace={handleSelectPlace}
         />
       </main>
