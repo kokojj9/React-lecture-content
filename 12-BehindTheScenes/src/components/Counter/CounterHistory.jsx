@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+import React from 'react';
 import { log } from '../../log.js';
 
 function HistoryItem({ count }) {

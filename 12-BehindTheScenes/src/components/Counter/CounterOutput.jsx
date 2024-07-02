@@ -1,4 +1,5 @@
 import { log } from '../../log.js';
+import React from 'react';
 
 export default function CounterOutput({ value }) {
   log('<CounterOutput /> rendered', 2);
