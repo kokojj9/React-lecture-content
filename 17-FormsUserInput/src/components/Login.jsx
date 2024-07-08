@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 export default function Login() {
   // const [enteredEmail, setEnteredEmail] = useState('');
@@ -8,6 +8,8 @@ export default function Login() {
   //   email: '',
   //   password: ''
   // });
+  const [emailIsInvalid, setEmailIsInvalid] = useState(false);
+
   const email = useRef();
   const password = useRef();
 
@@ -17,8 +19,19 @@ export default function Login() {
     const enteredEmail = email.current.value;
     const enteredPassword = password.current.value;
 
-    console.log(enteredEmail + enteredPassword);
-    email.current.value = '';
+    // console.log(enteredEmail + enteredPassword);
+    // email.current.value = ''; 
+    // 참조방법일 경우 초기화 방법 추천 방법은 아니다 dom을 직접 조작하는 것이기 때문에
+
+    const emailIsValid = !enteredEmail.includes('@');    
+  
+    if(!emailIsValid){
+      setEmailIsInvalid(true);
+      return;
+    }
+
+    setEmailIsInvalid(false);
+    console.log('Sending HTTP request...');
   }
 
   function handleInputChange(identifier, value) {
@@ -49,6 +62,9 @@ export default function Login() {
             // onChange={e => handleInputChange('email', e.target.value)}
             // value={enteredValues.email}
           />
+          <div className="control-error">
+            {!emailIsInvalid && <p>Plaease enter a valid email address.</p>}
+          </div>
         </div>
 
         <div className="control no-margin">
