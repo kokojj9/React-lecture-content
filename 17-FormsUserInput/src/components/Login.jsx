@@ -1,17 +1,24 @@
-import { useState } from "react";
+import { useRef } from "react";
 
 export default function Login() {
   // const [enteredEmail, setEnteredEmail] = useState('');
   // const [enteredPassword, setEnteredPassword] = useState('');
   // 객체 state 를 만들어 하나로 통합해도 상관 없음
-  const [enteredValues, setEnteredValues] = useState({
-    email: '',
-    password: ''
-  });
+  // const [enteredValues, setEnteredValues] = useState({
+  //   email: '',
+  //   password: ''
+  // });
+  const email = useRef();
+  const password = useRef();
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(enteredValues);
+    // console.log(enteredValues);
+    const enteredEmail = email.current.value;
+    const enteredPassword = password.current.value;
+
+    console.log(enteredEmail + enteredPassword);
+    email.current.value = '';
   }
 
   function handleInputChange(identifier, value) {
@@ -23,9 +30,9 @@ export default function Login() {
     }));
   }
 
-  function handlePasswordChange(e){
-    setEnteredValues(e.target.value);
-  }
+  // function handlePasswordChange(e){
+  //   setEnteredValues(e.target.value);
+  // }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -38,8 +45,9 @@ export default function Login() {
             id="email"
             type="email"
             name="email"
-            onChange={e => handleInputChange('email', e.target.value)}
-            value={enteredValues.email}
+            ref={email}
+            // onChange={e => handleInputChange('email', e.target.value)}
+            // value={enteredValues.email}
           />
         </div>
 
@@ -49,8 +57,9 @@ export default function Login() {
             id="password" 
             type="password" 
             name="password" 
-            onChange={e => handleInputChange('password', e.target.value)}
-            value={enteredValues.password}
+            ref={password}
+            // onChange={e => handleInputChange('password', e.target.value)}
+            // value={enteredValues.password}
           />
         </div>
       </div>
