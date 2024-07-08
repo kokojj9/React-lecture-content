@@ -1,6 +1,10 @@
+import { useState } from "react";
 
 
 export default function Signup() {
+
+  const [passwordsAreNotEqual, setPasswordsAreNotEqual] = useState(false);
+
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -12,8 +16,15 @@ export default function Signup() {
     data.acquistion = acquisitionChannel;
     console.log(data);
 
-    e.target.reset(); // reset버튼과 같은 작동 방식임
+    // e.target.reset(); // reset버튼과 같은 작동 방식임
     // 참조값을 초기화 하는 방법 대신에 이쪽을 추천
+
+    if(data.password !== data['confirm-password']){ 
+      // confirm-password속성에 접근하기 위해서는 -가 있기 때문에 대괄호를 사용해야함
+      setPasswordsAreNotEqual(true);
+
+      return;
+    }
   }
 
 
@@ -40,7 +51,11 @@ export default function Signup() {
             id="confirm-password"
             type="password"
             name="confirm-password"
+            required
           />
+          <div className="control-error">
+            {passwordsAreNotEqual && <p>Passwords must match.</p>}
+          </div>
         </div>
       </div>
 
