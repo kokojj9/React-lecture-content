@@ -1,11 +1,12 @@
-import { Component } from "react";
 import { useSelector, useDispatch, connect } from "react-redux";
 
+import { counterActions } from "../store/counter";
 import classes from "./Counter.module.css";
 
 const Counter = () => {
   const dispatch = useDispatch();
-  const counter = useSelector((state) => state.counter);
+  const counter = useSelector((state) => state.counter.counter);
+  const show = useSelector((state) => state.counter.showCounter);// 여러개 리덕스를만들면서 병합했기 때문에 식별자를 나눠줘야함
   // 그리고 여러분이 useSelector를 사용할 때
   // react-redux는 이 컴포넌트를 위해 리덕스 저장소에
   // 자동으로 구독을 설정한다는 게 중요합니다
@@ -17,23 +18,27 @@ const Counter = () => {
   // 이 컴포넌트 함수가 재실행될 것입니다
 
   const incrementHandler = () => {
-    dispatch({ type: "increment" });
+    dispatch(counterActions.increment());
   };
 
   const increaseHandler = () => {
-    dispatch({ type: "increase", amount: 5 });
+    dispatch(counterActions.increase(5)); 
+    // { type: SOME_UNIQUE_IDENTIFIER, payload: 10} toolkit이 자동으로 만들어서 사용
+    // payload는 toolkit에서 정한 속성명으로 개발자가 지정하는게 아님
   };
 
   const decrementHandler = () => {
-    dispatch({ type: "decrement" });
+    dispatch(counterActions.decrement());
   };
 
-  const toggleCounterHandler = () => {};
+  const toggleCounterHandler = () => {
+    dispatch(counterActions.toggleCounter());
+  };
 
   return (
     <main className={classes.counter}>
       <h1>Redux Counter</h1>
-      <div className={classes.value}>{counter}</div>
+      {show && <div className={classes.value}>{counter}</div>}
       <div>
         <button onClick={incrementHandler}>Increment</button>
         <button onClick={increaseHandler}>Increment by 5</button>
