@@ -8,6 +8,7 @@ import HomePage from "./pages/Home";
 import ProductsPage from "./pages/Products";
 import RootLayout from "./pages/Root";
 import ErrorPage from "./pages/Error";
+import ProductDetailPage from "./pages/ProductDetail";
 
 // const routeDefinitions = createRoutesFromElements(
 //   <Route>
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <HomePage /> },
       { path: "products", element: <ProductsPage /> },
+      { path: "products/:productId", element: <ProductDetailPage /> }, // 콜론기호로 동적url을 만들 수 있음 어떠한 값이 들어가도 엘리먼트 컴포넌트를 띄워줌
     ],
   },
 ]);
