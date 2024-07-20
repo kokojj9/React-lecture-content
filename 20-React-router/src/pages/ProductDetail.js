@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 function ProductDetailPage() {
   const params = useParams();
@@ -8,6 +8,8 @@ function ProductDetailPage() {
     <>
       <h1>Product details!</h1>
       <p>{params.productId}</p>
+      <p><Link to='..' relative="path">Back</Link></p>
+      {/* relative 속성으로 절대경로, 상대경로를 지정하여 라우터를 가동 시킬 수 있음 */}
     </>
   );
 }
