@@ -26,14 +26,28 @@ import EventsPage from "./pages/Events";
 import EventDetailPage from "./pages/EventDetail";
 import NewEventPage from "./pages/NewEvent";
 import EditEventPage from "./pages/EditEvent";
+import RootLayout from "./pages/Root";
+import EventsRootLayout from "./pages/EventsRoot";
 
 const router = createBrowserRouter([
-  { path: "/", element: <HomePage /> },
-  { path: "/events", element: <EventsPage /> },
-  { path: "/events/:eventId", element: <EventDetailPage /> },
-  { path: "/events/new", element: <NewEventPage /> },
-  // 리액트에서는 이렇게 지정해도 /new 의 url경로가 /:eventId로 읽히지 않고 우선도를 가짐
-  { path: "events/:eventId/edit", element: <EditEventPage /> },
+  {
+    path: "/",
+    element: <RootLayout />,
+    children: [
+      { index: true, element: <HomePage /> },
+      {
+        path: "events",
+        element: <EventsRootLayout />,
+        children: [
+          { index: true, element: <EventsPage /> },
+          { path: ":eventId", element: <EventDetailPage /> },
+          { path: "new", element: <NewEventPage /> },
+          // 리액트에서는 이렇게 지정해도 /new 의 url경로가 /:eventId로 읽히지 않고 우선도를 가짐
+          { path: ":eventId/edit", element: <EditEventPage /> },
+        ],
+      },
+    ],
+  },
 ]);
 
 function App() {
