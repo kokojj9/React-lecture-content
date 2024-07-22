@@ -1,37 +1,30 @@
-import { useEffect, useState } from 'react';
+import { useLoaderData } from "react-router";
 
-import EventsList from '../components/EventsList';
+import EventsList from "../components/EventsList";
 
 function EventsPage() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [fetchedEvents, setFetchedEvents] = useState();
-  const [error, setError] = useState();
+  const data = useLoaderData(); // loader가 산출하는 최종 데이터를 받음
+  const events = data.events;
 
-  useEffect(() => {
-    async function fetchEvents() {
-      setIsLoading(true);
-      const response = await fetch('http://localhost:8080/events');
-
-      if (!response.ok) {
-        setError('Fetching events failed.');
-      } else {
-        const resData = await response.json();
-        setFetchedEvents(resData.events);
-      }
-      setIsLoading(false);
-    }
-
-    fetchEvents();
-  }, []);
   return (
     <>
-      <div style={{ textAlign: 'center' }}>
-        {isLoading && <p>Loading...</p>}
-        {error && <p>{error}</p>}
-      </div>
-      {!isLoading && fetchedEvents && <EventsList events={fetchedEvents} />}
+      <EventsList events={events} />
     </>
   );
 }
 
 export default EventsPage;
+
+export async function loader() {
+  const response = await fetch("http://localhost:8080/events");
+
+  if (!response.ok) {
+    // ...
+  } else {
+    // const resData = await response.json();
+    // const res = new Response("any data", { status: 201 });
+    // return res;
+
+    return response;
+  }
+}
