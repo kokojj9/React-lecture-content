@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 
 import classes from "./EventForm.module.css";
 
@@ -9,7 +9,8 @@ function EventForm({ method, event }) {
   }
 
   return (
-    <form className={classes.form}>
+    <Form method="post" className={classes.form}>
+      {/* Form으로 데이터를 제출하면 바로 백엔드로 가는것이 아니라 action()으로 보내짐 */}
       <p>
         <label htmlFor="title">Title</label>
         <input
@@ -56,7 +57,7 @@ function EventForm({ method, event }) {
         </button>
         <button>Save</button>
       </div>
-    </form>
+    </Form>
   );
 }
 

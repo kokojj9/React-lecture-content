@@ -26,7 +26,7 @@ import EventsPage, { loader as eventsLoader } from "./pages/Events";
 import EventDetailPage, {
   loader as eventDetailLoader,
 } from "./pages/EventDetail";
-import NewEventPage from "./pages/NewEvent";
+import NewEventPage, { action as newEventAction } from "./pages/NewEvent";
 import EditEventPage from "./pages/EditEvent";
 import RootLayout from "./pages/Root";
 import EventsRootLayout from "./pages/EventsRoot";
@@ -57,11 +57,11 @@ const router = createBrowserRouter([
                 index: true,
                 element: <EventDetailPage />,
               },
-              { path: "edit", element: <EditEventPage /> },    
+              { path: "edit", element: <EditEventPage /> },
             ],
           },
           // 리액트에서는 이렇게 지정해도 /new 의 url경로가 /:eventId로 읽히지 않고 우선도를 가짐
-          { path: "new", element: <NewEventPage /> },
+          { path: "new", element: <NewEventPage />, action: newEventAction },
         ],
       },
     ],
