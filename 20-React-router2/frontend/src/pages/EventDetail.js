@@ -1,8 +1,9 @@
-import { json, useLoaderData } from "react-router";
+import { json, useRouteLoaderData } from "react-router-dom";
 import EventItem from "../components/EventItem";
 
 function EventDetailPage() {
-  const data = useLoaderData();
+  const data = useRouteLoaderData('event-detail');
+  // useLoaderData와 동일하게 작동하지만 id 값을 인자로 받음
 
   return <EventItem event={data.event} />;
 }

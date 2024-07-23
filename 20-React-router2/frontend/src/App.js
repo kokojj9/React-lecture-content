@@ -50,12 +50,18 @@ const router = createBrowserRouter([
           },
           {
             path: ":eventId",
-            element: <EventDetailPage />,
+            id: "event-detail",
             loader: eventDetailLoader,
+            children: [
+              {
+                index: true,
+                element: <EventDetailPage />,
+              },
+              { path: "edit", element: <EditEventPage /> },    
+            ],
           },
-          { path: "new", element: <NewEventPage /> },
           // 리액트에서는 이렇게 지정해도 /new 의 url경로가 /:eventId로 읽히지 않고 우선도를 가짐
-          { path: ":eventId/edit", element: <EditEventPage /> },
+          { path: "new", element: <NewEventPage /> },
         ],
       },
     ],
