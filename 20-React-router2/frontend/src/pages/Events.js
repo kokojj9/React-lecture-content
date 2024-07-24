@@ -1,26 +1,28 @@
-import { json, useLoaderData } from "react-router";
+import { Await, defer, json, useLoaderData } from "react-router";
 
 import EventsList from "../components/EventsList";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
 function EventsPage() {
-  const data = useLoaderData(); // loader가 산출하는 최종 데이터를 받음
-  const events = data.events;
+  const { events } = useLoaderData(); // loader가 산출하는 최종 데이터를 받음
+  // const events = data.events;
 
-  if (data.isError) {
-    return <p>{data.message}</p>;
-  }
+  // if (data.isError) {
+  //   return <p>{data.message}</p>;
+  // }
 
   return (
-    <>
-      <EventsList events={events} />
-    </>
+    <Suspense fallvack={<p style={{ textAlign: "center" }}>Loading...</p>}>
+      <Await resolve={events}>
+        {(loadedEvents) => <EventsList events={loadedEvents} />}
+      </Await>
+    </Suspense>
   );
 }
 
 export default EventsPage;
 
-export async function loader() {
+async function loadEvents() {
   // loader는 리액트 컴포넌트가 아님! 훅을 사용할 수 없음
 
   const response = await fetch("http://localhost:8081/events");
@@ -36,6 +38,15 @@ export async function loader() {
     // const res = new Response("any data", { status: 201 });
     // return res;
 
-    return response;
+    // return response;
+    const resData = await response.json();
+    return resData.events;
+    // defer 단계가 있다면 파싱해줘야함
   }
+}
+
+export function loader() {
+  return defer({
+    events: loadEvents(),
+  });
 }
