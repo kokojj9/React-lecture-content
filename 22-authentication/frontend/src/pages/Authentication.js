@@ -41,7 +41,11 @@ export async function action({ request }) {
   const token = resData.token;
 
   localStorage.setItem("token", token);
-  
+
+  // 토큰을 받으며 로그인 유지 시간 설정
+  const expiration = new Date();
+  expiration.setHours(expiration.getHours() + 1);
+  localStorage.setItem("expiration", expiration.toISOString()); //날짜를 표준화된 스트링으로 변환
 
   return redirect("/");
 }
