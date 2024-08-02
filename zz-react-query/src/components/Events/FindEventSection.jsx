@@ -1,20 +1,25 @@
 import { useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchEvents } from "../../util/http.js";
+import LoadingIndicator from "../UI/LoadingIndicator.jsx";
 import EventItem from "./EventItem";
+import ErrorBlock from "../UI/ErrorBlock.jsx";
 
 export default function FindEventSection() {
   const searchElement = useRef();
   const [searchTerm, setSerachTerm] = useState();
 
-  const { data, isPending, isError, error } = useQuery({
+  const { data, isLoading, isError, error } = useQuery({
+    // isPending,isLoading의 차이점
+    // isLoading은 쿼리가 비활성화됐다고해서 enabeled가 true가 되지않음
     queryKey: ["events", { search: searchTerm }],
-    queryFn: () => fetchEvents(searchTerm),
+    queryFn: ({ signal }) => fetchEvents({ signal, searchTerm }),
+    enabled: searchTerm !== undefined // 조건에 따라서 함수를 활성,비활성화할 수 있다
   });
 
   let content = <p>Please enter a search term and to find events.</p>;
 
-  if (isPending) {
+  if (isLoading) {
     content = <LoadingIndicator />;
   }
 
