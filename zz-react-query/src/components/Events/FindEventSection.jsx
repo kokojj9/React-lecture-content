@@ -13,8 +13,8 @@ export default function FindEventSection() {
     // isPending,isLoading의 차이점
     // isLoading은 쿼리가 비활성화됐다고해서 enabeled가 true가 되지않음
     queryKey: ["events", { search: searchTerm }],
-    queryFn: ({ signal }) => fetchEvents({ signal, searchTerm }),
-    enabled: searchTerm !== undefined // 조건에 따라서 함수를 활성,비활성화할 수 있다
+    queryFn: ({ signal, queryKey }) => fetchEvents({ signal, ...queryKey[1] }),
+    enabled: searchTerm !== undefined, // 조건에 따라서 함수를 활성,비활성화할 수 있다
   });
 
   let content = <p>Please enter a search term and to find events.</p>;
