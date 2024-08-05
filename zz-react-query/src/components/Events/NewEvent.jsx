@@ -13,7 +13,7 @@ export default function NewEvent() {
     // 컨포넌트가 렌더링될때 자동으로 함수를 실행해주지 않음
     mutationFn: createNewEvent,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["events"] }); // 이 키를 사용하는 모든 쿼리가 무효화됨 
+      queryClient.invalidateQueries({ queryKey: ["events"] }); // 이 키를 사용하는 모든 쿼리가 무효화됨
       navigate("/events");
     },
   });
@@ -39,9 +39,9 @@ export default function NewEvent() {
       </EventForm>
       {isError && (
         <ErrorBlock
-          title="Failed to crate evnet"
+          title="Failed to create event"
           message={
-            error.info?.message || "failed to create enevt. Please aaaa..."
+            error.info?.message || "failed to create event. Please aaaa..."
           }
         />
       )}
