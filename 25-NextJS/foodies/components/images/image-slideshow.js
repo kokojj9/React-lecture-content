@@ -1,25 +1,30 @@
-import { useEffect, useState } from 'react';
-import Image from 'next/image';
+"use client";
 
-import burgerImg from '@/assets/burger.jpg';
-import curryImg from '@/assets/curry.jpg';
-import dumplingsImg from '@/assets/dumplings.jpg';
-import macncheeseImg from '@/assets/macncheese.jpg';
-import pizzaImg from '@/assets/pizza.jpg';
-import schnitzelImg from '@/assets/schnitzel.jpg';
-import tomatoSaladImg from '@/assets/tomato-salad.jpg';
-import classes from './image-slideshow.module.css';
+import { useEffect, useState } from "react";
+import Image from "next/image";
+
+import burgerImg from "@/assets/burger.jpg";
+import curryImg from "@/assets/curry.jpg";
+import dumplingsImg from "@/assets/dumplings.jpg";
+import macncheeseImg from "@/assets/macncheese.jpg";
+import pizzaImg from "@/assets/pizza.jpg";
+import schnitzelImg from "@/assets/schnitzel.jpg";
+import tomatoSaladImg from "@/assets/tomato-salad.jpg";
+import classes from "./images-slideshow.module.css";
 
 const images = [
-  { image: burgerImg, alt: 'A delicious, juicy burger' },
-  { image: curryImg, alt: 'A delicious, spicy curry' },
-  { image: dumplingsImg, alt: 'Steamed dumplings' },
-  { image: macncheeseImg, alt: 'Mac and cheese' },
-  { image: pizzaImg, alt: 'A delicious pizza' },
-  { image: schnitzelImg, alt: 'A delicious schnitzel' },
-  { image: tomatoSaladImg, alt: 'A delicious tomato salad' },
+  { image: burgerImg, alt: "A delicious, juicy burger" },
+  { image: curryImg, alt: "A delicious, spicy curry" },
+  { image: dumplingsImg, alt: "Steamed dumplings" },
+  { image: macncheeseImg, alt: "Mac and cheese" },
+  { image: pizzaImg, alt: "A delicious pizza" },
+  { image: schnitzelImg, alt: "A delicious schnitzel" },
+  { image: tomatoSaladImg, alt: "A delicious tomato salad" },
 ];
 
+//nextJs에서의 컴포넌트는 기본적으로 서버컴포넌트이나,
+//이 컴포넌트같이 클라이언트단에서 조작이 필요할경우나
+//useState같은 훅을 사용할때에는 클라이언트 컴포넌트로 바꿔줄 필요가 있다
 export default function ImageSlideshow() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -39,7 +44,7 @@ export default function ImageSlideshow() {
         <Image
           key={index}
           src={image.image}
-          className={index === currentImageIndex ? classes.active : ''}
+          className={index === currentImageIndex ? classes.active : ""}
           alt={image.alt}
         />
       ))}
