@@ -1,22 +1,28 @@
 import ImagePicker from "@/components/meals/image-picker";
 import classes from "./page.module.css";
 
-export default function ShareMealPage() {
-  async function shareMeal(formData) {
-    "use server";
-    // server action이라는 것을 생성 이 함수가 오직 서버에서만 실행되게 함
-    // 함수에서는 꼭 명시해줘야함 async를 붙혀야함
-    const meal = {
-      title: formData.get("title"),
-      summary: formData.get("summary"),
-      instructions: formData.get("instructions"),
-      image: formData.get("image"),
-      creator: formData.get("name"),
-      creator_email: formData.get("email"),
-    };
+import { shareMeal } from "@/lib/action";
 
-    console.log(meal);
-  }
+export default function ShareMealPage() {
+  // async function shareMeal(formData) {
+  //   "use server";
+  //   // server action이라는 것을 생성 이 함수가 오직 서버에서만 실행되게 함
+  //   // 함수에서는 꼭 명시해줘야함 async를 붙혀야함
+  //   // 클라이언트 컴포넌트라고 선언했다면 사용 불가
+  //   const meal = {
+  //     title: formData.get("title"),
+  //     summary: formData.get("summary"),
+  //     instructions: formData.get("instructions"),
+  //     image: formData.get("image"),
+  //     creator: formData.get("name"),
+  //     creator_email: formData.get("email"),
+  //   };
+
+  //   console.log(meal);
+  // }
+  // action.js로 분리
+  // 클라이언트 측에서 서버 요청 로직을 확인 할 수 있기 때문에 분리하여 관리하는것이 좋음 / 보안이슈!
+  // 분리 하면 use client를 사용할 수 있음
 
   return (
     <>
