@@ -9,3 +9,7 @@ export async function getMeals() {
   return db.prepare("SELECT * FROM meals").all();
   // run은 데이터를 추가하거나 수정할때 all은 가져올때
 }
+
+export function getMeal(slug) {
+  return db.prepare("SELECT * FROM meals WHERE slug = ?").get(slug);
+}
