@@ -1,7 +1,12 @@
+"use client";
+
+import { useFormStatus } from "react-dom";
+
 import ImagePicker from "@/components/meals/image-picker";
 import classes from "./page.module.css";
 
 import { shareMeal } from "@/lib/action";
+import MealsFormSubmit from "@/components/meals/meals-form-submit";
 
 export default function ShareMealPage() {
   // async function shareMeal(formData) {
@@ -24,6 +29,20 @@ export default function ShareMealPage() {
   // 클라이언트 측에서 서버 요청 로직을 확인 할 수 있기 때문에 분리하여 관리하는것이 좋음 / 보안이슈!
   // 분리 하면 use client를 사용할 수 있음
 
+  // const {pending} = useFormStatus(); //클라이언트 컴포넌트에서만 사용할 수 있음
+
+  const [state, formAction] = useFormStatus(
+    shareMeal,
+    /*초기값*/ { message: null }
+  );
+  // useFormStatus 이름은 같지만 다른 작동방식을 가지고 있음
+
+  // npm run build 를 통해 서버 배포 환경을 빌드하게 되면 
+  // 리액트의 공격적인 캐싱과정에서 사전에 컴포넌트를 렌더링 해놓기 때문에
+  // 사실상 동적 컴포넌트가 아니게 됨
+  // 사이트에 처음방문하더라도 사전에 렌더링된 것을 보여주기 때문에 사용성이 좋아짐
+  // 하지만 새로 추가된 데이터를 가져오지는 않기 때문에 단점이 있음
+  // 어떻게 고칠 수 있을까? -> 캐시 유효성  재확인 트리거
   return (
     <>
       <header className={classes.header}>
@@ -33,7 +52,7 @@ export default function ShareMealPage() {
         <p>Or any other meal you feel needs sharing!</p>
       </header>
       <main className={classes.main}>
-        <form className={classes.form} action={shareMeal}>
+        <form className={classes.form} action={formAction}>
           {/*
             리액트와 넥스트js가 지원하는 기능으로 action에는 요청 url이 들어가야하지만
             함수를 호출하며 form태그를 제어할 수 있게 됨 단, 서버측에서
@@ -66,8 +85,9 @@ export default function ShareMealPage() {
             ></textarea>
           </p>
           <ImagePicker label="Your image" name="image" />
+          {state.message && <p>{state.mesage}</p>}
           <p className={classes.actions}>
-            <button type="submit">Share Meal</button>
+            <MealsFormSubmit />
           </p>
         </form>
       </main>
