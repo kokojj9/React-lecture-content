@@ -4,6 +4,15 @@ import classes from "./page.module.css";
 import { getMeal } from "@/lib/meals";
 import { notFound } from "next/navigation";
 
+export async function generateMetadata(params) {
+  const meal = getMeal(params.mealSlug);
+  return {
+    title: meal.title,
+    description: meal.description,
+  };
+}
+// 동적 메타데이터 추가
+
 export default function MealDetailsPage({ params }) {
   const meal = getMeal(params.mealSlug);
 

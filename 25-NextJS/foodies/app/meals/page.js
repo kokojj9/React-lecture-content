@@ -8,7 +8,7 @@ import { getMeals } from "@/lib/meals";
 export const metadata = {
   title: "All Meals",
   description: "Browse the delicious meals shared bt our vibrant community.",
-};
+}; // 정적 메타데이터 추가
 
 async function Meals() {
   const meals = await getMeals();
@@ -16,7 +16,7 @@ async function Meals() {
   return <MealsGrid meals={meals} />;
 }
 
-export default async function MealsPage() {
+export default async function MealsPage({params}) {
   // 서버컴포넌트는 비동기 함수로 바꿀 수 있다!
 
   return (
