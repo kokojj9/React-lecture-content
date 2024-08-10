@@ -7,7 +7,7 @@ function isInvalidText(text) {
   return !text || text.trim() === "";
 }
 
-export async function shareMeal(formData) {
+export async function shareMeal(prevState, formData) {
   const meal = {
     title: formData.get("title"),
     summary: formData.get("summary"),
@@ -27,7 +27,11 @@ export async function shareMeal(formData) {
     !meal.image ||
     meal.image.size === 0
   ) {
-    throw new Error("Invalid input");
+    // throw new Error("Invalid input");
+    return {
+      message: "Invaild input",
+    };
+    // 직렬화가 가능한 객체만! 값에 함수같은건 들어가면 안됨
   }
 
   await saveMeal(meal);

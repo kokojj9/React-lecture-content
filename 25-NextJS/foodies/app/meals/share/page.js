@@ -1,3 +1,7 @@
+"use client";
+
+import { useFormStatus } from "react-dom";
+
 import ImagePicker from "@/components/meals/image-picker";
 import classes from "./page.module.css";
 
@@ -25,7 +29,13 @@ export default function ShareMealPage() {
   // 클라이언트 측에서 서버 요청 로직을 확인 할 수 있기 때문에 분리하여 관리하는것이 좋음 / 보안이슈!
   // 분리 하면 use client를 사용할 수 있음
 
-  // const status = useFormStatus(); //클라이언트 컴포넌트에서만 사용할 수 있음
+  // const {pending} = useFormStatus(); //클라이언트 컴포넌트에서만 사용할 수 있음
+
+  const [state, formAction] = useFormStatus(
+    shareMeal,
+    /*초기값*/ { message: null }
+  );
+  // useFormStatus 이름은 같지만 다른 작동방식을 가지고 있음
 
   return (
     <>
@@ -36,7 +46,7 @@ export default function ShareMealPage() {
         <p>Or any other meal you feel needs sharing!</p>
       </header>
       <main className={classes.main}>
-        <form className={classes.form} action={shareMeal}>
+        <form className={classes.form} action={formAction}>
           {/*
             리액트와 넥스트js가 지원하는 기능으로 action에는 요청 url이 들어가야하지만
             함수를 호출하며 form태그를 제어할 수 있게 됨 단, 서버측에서
@@ -69,6 +79,7 @@ export default function ShareMealPage() {
             ></textarea>
           </p>
           <ImagePicker label="Your image" name="image" />
+          {state.message && <p>{state.mesage}</p>}
           <p className={classes.actions}>
             <MealsFormSubmit />
           </p>
