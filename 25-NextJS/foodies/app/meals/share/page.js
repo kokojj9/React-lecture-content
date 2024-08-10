@@ -2,6 +2,7 @@ import ImagePicker from "@/components/meals/image-picker";
 import classes from "./page.module.css";
 
 import { shareMeal } from "@/lib/action";
+import MealsFormSubmit from "@/components/meals/meals-form-submit";
 
 export default function ShareMealPage() {
   // async function shareMeal(formData) {
@@ -23,6 +24,8 @@ export default function ShareMealPage() {
   // action.js로 분리
   // 클라이언트 측에서 서버 요청 로직을 확인 할 수 있기 때문에 분리하여 관리하는것이 좋음 / 보안이슈!
   // 분리 하면 use client를 사용할 수 있음
+
+  // const status = useFormStatus(); //클라이언트 컴포넌트에서만 사용할 수 있음
 
   return (
     <>
@@ -67,7 +70,7 @@ export default function ShareMealPage() {
           </p>
           <ImagePicker label="Your image" name="image" />
           <p className={classes.actions}>
-            <button type="submit">Share Meal</button>
+            <MealsFormSubmit />
           </p>
         </form>
       </main>
