@@ -42,6 +42,7 @@ export default function ShareMealPage() {
   // 사실상 동적 컴포넌트가 아니게 됨
   // 사이트에 처음방문하더라도 사전에 렌더링된 것을 보여주기 때문에 사용성이 좋아짐
   // 하지만 새로 추가된 데이터를 가져오지는 않기 때문에 단점이 있음
+  // 어떻게 고칠 수 있을까? -> 캐시 유효성  재확인 트리거
   return (
     <>
       <header className={classes.header}>
