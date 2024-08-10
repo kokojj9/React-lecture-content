@@ -5,6 +5,11 @@ import classes from "./page.module.css";
 import MealsGrid from "@/components/meals/meals-grid";
 import { getMeals } from "@/lib/meals";
 
+export const metadata = {
+  title: "All Meals",
+  description: "Browse the delicious meals shared bt our vibrant community.",
+};
+
 async function Meals() {
   const meals = await getMeals();
 
@@ -29,11 +34,12 @@ export default async function MealsPage() {
         </p>
       </header>
       <main className={classes.main}>
-        <Suspense fallback={<p className={classes.loading}>Fetching meals...</p>}>
+        <Suspense
+          fallback={<p className={classes.loading}>Fetching meals...</p>}
+        >
           <Meals />
         </Suspense>
       </main>
     </>
   );
 }
-
