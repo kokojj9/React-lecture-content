@@ -37,6 +37,11 @@ export default function ShareMealPage() {
   );
   // useFormStatus 이름은 같지만 다른 작동방식을 가지고 있음
 
+  // npm run build 를 통해 서버 배포 환경을 빌드하게 되면 
+  // 리액트의 공격적인 캐싱과정에서 사전에 컴포넌트를 렌더링 해놓기 때문에
+  // 사실상 동적 컴포넌트가 아니게 됨
+  // 사이트에 처음방문하더라도 사전에 렌더링된 것을 보여주기 때문에 사용성이 좋아짐
+  // 하지만 새로 추가된 데이터를 가져오지는 않기 때문에 단점이 있음
   return (
     <>
       <header className={classes.header}>
