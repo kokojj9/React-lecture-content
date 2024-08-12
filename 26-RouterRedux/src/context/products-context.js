@@ -4,7 +4,8 @@ export const ProductsContext = React.createContext({
   products: [],
   toggleFav: (id) => {},
 });
-
+// 고빈도 작업에서는 context Api는 적합하지 않다 useContext를 사용하는 컴포넌트에 영향을 미치게됨
+// 그래서 찜이나 장바구니같은 작업은 context Api가 이상적이지않다.
 const ProductsProvider = (props) => {
   const [productsList, setProductsList] = useState([
     {
