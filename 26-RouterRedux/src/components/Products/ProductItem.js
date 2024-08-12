@@ -5,14 +5,14 @@ import "./ProductItem.css";
 // import { ProductsContext } from "../../context/products-context";
 import { useStore } from "../../hooks-store/store";
 
-const ProductItem = (props) => {
+const ProductItem = React.memo((props) => {
   // const toggleFav = useContext(ProductsContext).toggleFav;
-  const dispatch = useStore()[1];
+  const dispatch = useStore(false)[1]; // shouldListen 조작
 
   const toggleFavHandler = () => {
     // dispatch(toggleFav(props.id));
     // toggleFav(props.id);
-    dispatch('TOGGLE_FAV', props.id);
+    dispatch("TOGGLE_FAV", props.id);
   };
 
   return (
@@ -29,6 +29,6 @@ const ProductItem = (props) => {
       </div>
     </Card>
   );
-};
+});
 
 export default ProductItem;
