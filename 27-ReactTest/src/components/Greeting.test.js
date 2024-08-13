@@ -54,5 +54,7 @@ describe("Greeting component", () => {
     });
     // queryByText -> 요소가 찾아지지않으면 null을 반환
     expect(outputElement).toBeNull();
+  
   });
+  
 });
