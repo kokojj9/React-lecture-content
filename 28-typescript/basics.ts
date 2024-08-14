@@ -52,3 +52,17 @@ function print(value: any) {
   // void는 함수에만 있는 특별한 자료형
   console.log(value);
 }
+
+// 제네릭
+function insertAtBeginning<T>(array: T[], value: T) {
+  // any로 지정했기 때문에 숫자타입 배열이 반환된다는 것을 지원받을 수 없음
+  // 제네릭을 설정하여 any타입이 아니라는 것을 알림 -> 타입스크립트가 타입을 추론함
+  const newArray = [value, ...array];
+  return newArray;
+}
+
+const demoArray = [1, 2, 3];
+const updatedArray = insertAtBeginning(demoArray, -1); // [-1, 1, 2, 3 ]
+const stringArray = insertAtBeginning(["a", "b", "c"], "d");
+
+updatedArray[0].split("");
