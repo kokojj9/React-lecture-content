@@ -34,6 +34,7 @@ let people: {
 }[]; //객체 배열로도 가능
 
 // 타입 추론
-let course = 'React - The Complete Guide';
-course = 123123; // 타입을 입력하지 않았는데 밑줄 발생
+let course: string | number = 'React - The Complete Guide'; // union 타입
+course = 123123; // 타입을 입력하지 않았는데 밑줄 발생 union타입으로 지정하니 밑줄 사라짐
 // 타입스크립트의 기능 -> 타입을 추론해줌
+
