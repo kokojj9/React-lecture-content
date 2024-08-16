@@ -1,8 +1,9 @@
 import React from "react";
+import Todo from "../models/todo";
 
 // 함수 컴포넌트 제네릭을 설정 FC는 React에 포함된 타입임
 // 함수형 컴포넌트로 동작한다는 것을 명시적으로 만들어줌
-const Todos: React.FC<{ items: string[] }> = (props) => {
+const Todos: React.FC<{ items: Todo[] }> = (props) => {
   // 리액트는 다른 방법을 제공합니다
   // 리액트와 타입스크립트가 제공하는 방법이라고 할 수도 있고요
   // 바로 제네릭 타입을 이용하는 겁니다, 아마 기억하실 거예요
@@ -18,7 +19,7 @@ const Todos: React.FC<{ items: string[] }> = (props) => {
   return (
     <ul>
       {props.items.map((item) => (
-        <li key={item}>{item}</li>
+        <li key={item.id}>{item.text}</li>
       ))}
     </ul>
   );
