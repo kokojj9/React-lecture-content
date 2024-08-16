@@ -1,12 +1,21 @@
+import { useState } from "react";
+
 import NewTodo from "./components/NewTodo";
-import Todos from "./components/Todo";
+import Todos from "./components/Todos";
 import Todo from "./models/todo";
 
 function App() {
-  const todos = [new Todo("Learn React"), new Todo("Learn TypeScript")];
+  const [todos, setTodos] = useState<Todo[]>([]);
+  // 빈배열을 초기값으로 넣으면 never[]타입을 갖는데
+  // 이럴 경우 어떠한 값도 배열에 들어올 수 없음
+  // 제네릭을 설정해 줄 수 있음
 
   const addTodohandler = (text: string) => {
+    const newTodo = new Todo(text);
 
+    setTodos((prevTodos) => {
+      return prevTodos.concat(newTodo);
+    });
   };
 
   return (

@@ -1,5 +1,7 @@
 import React, { useRef } from "react";
 
+import classes from "./NewTodo.module.css";
+
 const NewTodo: React.FC<{ onAddTodo: (text: string) => void }> = (props) => {
   // React.FC의 제네릭을 함수로 표현하기 위한 문법이지 실제 함수가 생성된 것이 아니다
   // () => 반환형을 입력하면 된다.
@@ -21,7 +23,7 @@ const NewTodo: React.FC<{ onAddTodo: (text: string) => void }> = (props) => {
   };
 
   return (
-    <form onSubmit={submitHandler}>
+    <form onSubmit={submitHandler} className={classes.form}>
       <label htmlFor="text">Todo text</label>
       <input type="text" id="text" ref={todoTextInputRef} />
       <button>Add Todo</button>
