@@ -1,8 +1,12 @@
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
+
+import { TodosContext } from "../store/todos-context";
 
 import classes from "./NewTodo.module.css";
 
-const NewTodo: React.FC<{ onAddTodo: (text: string) => void }> = (props) => {
+const NewTodo: React.FC = () => {
+  const todosCtx = useContext(TodosContext);
+
   // React.FC의 제네릭을 함수로 표현하기 위한 문법이지 실제 함수가 생성된 것이 아니다
   // () => 반환형을 입력하면 된다.
   const todoTextInputRef = useRef<HTMLInputElement>(null);
@@ -19,7 +23,7 @@ const NewTodo: React.FC<{ onAddTodo: (text: string) => void }> = (props) => {
       return;
     }
 
-    props.onAddTodo(enteredText);
+    todosCtx.addTodo(enteredText);
   };
 
   return (

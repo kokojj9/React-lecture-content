@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import TodoItem from "./TodoItem";
 import Todo from "../models/todo";
-import classes from'./Todos.module.css'
-
+import classes from "./Todos.module.css";
+import { TodosContext } from "../store/todos-context";
 
 // 함수 컴포넌트 제네릭을 설정 FC는 React에 포함된 타입임
 // 함수형 컴포넌트로 동작한다는 것을 명시적으로 만들어줌
-const Todos: React.FC<{ items: Todo[] }> = (props) => {
+const Todos: React.FC = () => {
+  //컨텍스트 api로 제네릭과 props가 필요없게됨
+  const todosCtx = useContext(TodosContext);
+
   // 리액트는 다른 방법을 제공합니다
   // 리액트와 타입스크립트가 제공하는 방법이라고 할 수도 있고요
   // 바로 제네릭 타입을 이용하는 겁니다, 아마 기억하실 거예요
@@ -22,8 +25,12 @@ const Todos: React.FC<{ items: Todo[] }> = (props) => {
   // 그런 다음 새로운 props를 추가로 정의합니다
   return (
     <ul className={classes.todos}>
-      {props.items.map((item) => (
-        <TodoItem key={item.id} text={item.text} />
+      {todosCtx.items.map((item) => (
+        <TodoItem
+          key={item.id}
+          text={item.text}
+          onRemoveTodo={todosCtx.removeTodo.bind(null, item.id)}
+        />
       ))}
     </ul>
   );
