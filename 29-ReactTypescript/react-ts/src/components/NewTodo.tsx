@@ -1,6 +1,8 @@
-import { useRef } from "react";
+import React, { useRef } from "react";
 
-const NewTodo = () => {
+const NewTodo: React.FC<{ onAddTodo: (text: string) => void }> = (props) => {
+  // React.FC의 제네릭을 함수로 표현하기 위한 문법이지 실제 함수가 생성된 것이 아니다
+  // () => 반환형을 입력하면 된다.
   const todoTextInputRef = useRef<HTMLInputElement>(null);
 
   const submitHandler = (e: React.FormEvent) => {
@@ -15,7 +17,7 @@ const NewTodo = () => {
       return;
     }
 
-    
+    props.onAddTodo(enteredText);
   };
 
   return (
